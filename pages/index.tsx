@@ -102,8 +102,10 @@ export const Home = (): JSX.Element => {
                         menu
                           ? 'transition ease-out duration-100'
                           : 'transition ease-in duration-75'
-                      } transform opacity-${menu ? 100 : 0} scale-${
-                        menu ? 100 : 95
+                      } ${
+                        menu
+                          ? 'transform opacity-100 scale-100'
+                          : 'transform opacity-0 scale-95'
                       } origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5`}
                       role="menu"
                       aria-orientation="vertical"
