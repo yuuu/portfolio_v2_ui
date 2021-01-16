@@ -15,7 +15,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <div className="flex flex-col min-h-screen">
         <main className="flex-grow">
           <Navbar />
-          <Component {...pageProps} />
+          <div className="container mx-auto">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+              <div className="px-4 sm:px-0">
+                <Component {...pageProps} />
+              </div>
+            </div>
+          </div>
         </main>
         <Footer />
       </div>

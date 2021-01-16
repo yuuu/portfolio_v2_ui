@@ -1,15 +1,27 @@
 import React from 'react'
-import Header from '../components/Haeder'
+import Link from 'next/link'
 
 export const Home: React.FC = () => {
   return (
     <>
-      <Header title="Profile" />
-      <div className="container mx-auto">
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+      <div className="flex flex-wrap md:flex-nowrap justify-center items-center">
+        <div>
+          <h1 className="text-6xl leading-tight text-gray-900 py-4 my-4 border-b-2">
+            Welcome to yuuu&lsquo;s portfolio.
+          </h1>
+          <span className="text-2xl block justify-center mb-8">
+            Check out my profile!
+          </span>
+          <div className="flex justify-center">
+            <Link href="/profile">
+              <button className="bg-accent hover:bg-accent-dark text-white text-2xl py-2 px-4 w-1/2 tracking-widest rounded block">
+                Profile
+              </button>
+            </Link>
           </div>
+        </div>
+        <div>
+          <img src="/logo.png" className="" />
         </div>
       </div>
     </>
