@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const Home: React.FC = () => {
   return (
     <>
-      <div className="flex flex-wrap md:flex-nowrap justify-center items-center">
+      <div className="flex flex-col md:flex-row justify-center items-center">
         <div>
           <h1 className="text-6xl leading-tight text-gray-900 py-4 my-4 border-b-2">
             Welcome to yuuu&lsquo;s portfolio.
@@ -21,7 +21,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
         <div>
-          <img src="/logo.png" className="" />
+          <img src="/logo.png" />
         </div>
       </div>
     </>
