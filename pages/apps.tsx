@@ -5,7 +5,7 @@ export const Apps: React.FC = () => {
   return (
     <>
       <Header title="Apps" />
-      <div className="container px-5 mx-auto">
+      <div className="container mx-auto">
         <div className="flex flex-wrap -m-4">
           {['app1', 'app2', 'app3'].map((name) => (
             <div key={name} className="p-4 md:w-1/3">
