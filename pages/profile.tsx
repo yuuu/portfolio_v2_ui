@@ -13,7 +13,7 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 
-export const Home: React.FC = () => {
+export const Profile: React.FC = () => {
   return (
     <>
       <Header title="Profile" />
@@ -22,13 +22,11 @@ export const Home: React.FC = () => {
           <img src="/profile.png" className="h-96 w-96 shadow" />
         </div>
         <div className="flex-grow">
-          <h1 className="text-4xl leading-tight text-gray-900 py-2 mb-4 border-b-2">
+          <h1 className="text-4xl leading-tight text-gray-900 pb-2 mb-4 border-b-2">
             岡嵜 雄平{' '}
             <span className="text-xl text-gray-500">Okazaki Yuhei</span>
           </h1>
-          <p className="text-xl text-accent block mb-4">
-            株式会社Fusic IoTエンジニア
-          </p>
+          <p className="text-xl text-accent block mb-4">株式会社Fusic</p>
           <div className="flex flex-row justify-start mb-4 space-x-4">
             <a
               href="https://github.com/yuuu"
@@ -52,13 +50,12 @@ export const Home: React.FC = () => {
               <FontAwesomeIcon icon={faFacebook} size="lg" />
             </a>
           </div>
-          <h2 className="text-2xl py-2 mb-2">自己紹介</h2>
           <p className="mb-4">
-            2018年から福岡でWebエンジニアしてます。2017年まで関西で組込みエンジニアしてました
+            2018年から福岡でWeb/IoTエンジニアしてます。
+            2017年まで関西で組込みエンジニアしてました。
             <br />
-            RailsやIoTの開発に興味がある方はぜひお声掛けを！
+            Railsを使った開発や、IoTに興味がある方はぜひお声掛けを！
           </p>
-          <h2 className="text-2xl py-2 mb-2">詳細</h2>
           <table className="min-w-full divide-y divide-gray-200">
             <tbody>
               <tr>
@@ -105,4 +102,4 @@ export const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default Profile

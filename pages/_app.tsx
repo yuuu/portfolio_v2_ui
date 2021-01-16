@@ -13,7 +13,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="flex flex-col min-h-screen">
-        <main className="flex-grow">
+        <main className="flex-grow mb-8">
           <Navbar />
           <div className="container mx-auto">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
