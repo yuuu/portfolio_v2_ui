@@ -19,35 +19,34 @@ export const Profile: React.FC = () => {
       <Header title="Profile" />
       <div className="flex flex-col md:flex-row space-x-4">
         <div className="flex-none flex justify-center">
-          <img src="/profile.png" className="h-96 w-96 shadow" />
+          <img src="/profile.png" className="w-96 mb-4 shadow" />
         </div>
         <div className="flex-grow">
           <h1 className="text-4xl leading-tight text-gray-900 pb-2 mb-4 border-b-2">
             岡嵜 雄平{' '}
             <span className="text-xl text-gray-500">Okazaki Yuhei</span>
           </h1>
-          <p className="text-xl text-accent block mb-4">株式会社Fusic</p>
           <div className="flex flex-row justify-start mb-4 space-x-4">
             <a
               href="https://github.com/yuuu"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FontAwesomeIcon icon={faGithub} size="lg" />
+              <FontAwesomeIcon icon={faGithub} size="2x" />
             </a>
             <a
               href="https://twitter.com/Y_uuu"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FontAwesomeIcon icon={faTwitter} size="lg" />
+              <FontAwesomeIcon icon={faTwitter} size="2x" />
             </a>
             <a
               href="https://www.facebook.com/yuhei.okazaki/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FontAwesomeIcon icon={faFacebook} size="lg" />
+              <FontAwesomeIcon icon={faFacebook} size="2x" />
             </a>
           </div>
           <p className="mb-4">
