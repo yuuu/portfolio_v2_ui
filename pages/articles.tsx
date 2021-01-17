@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/Haeder'
 
-export const Articles: React.FC = () => {
+const Articles: React.FC = () => {
   return (
     <>
       <Header title="Articles" />

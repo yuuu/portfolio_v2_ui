@@ -13,7 +13,7 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 
-export const Profile: React.FC = () => {
+const Profile: React.FC = () => {
   return (
     <>
       <Header title="Profile" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <>
       <div className="flex flex-col md:flex-row justify-center items-center">
