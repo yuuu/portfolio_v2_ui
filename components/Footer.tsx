@@ -1,7 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import { User } from '../lib/next-hook-auth'
 
-export const Footer: React.FC = () => {
+type Props = {
+  user?: User
+}
+
+export const Footer: React.FC<Props> = ({ user }) => {
   return (
     <footer className="bg-gray-800 body-font">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,9 +15,13 @@ export const Footer: React.FC = () => {
             Copyright © 2021 yuuu. All Rights Reserved.
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
-            <Link href="/admin/signin">
-              <a className="ml-3 text-sm text-white">Admin</a>
-            </Link>
+            {user ? (
+              <a className="ml-3 text-sm text-white">Signout</a>
+            ) : (
+              <Link href="/admin/signin">
+                <a className="ml-3 text-sm text-white">Signin</a>
+              </Link>
+            )}
           </span>
         </div>
       </div>

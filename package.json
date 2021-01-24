@@ -38,6 +38,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.14.2",
+    "swr": "^0.4.0",
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {

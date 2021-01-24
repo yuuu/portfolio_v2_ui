@@ -1,24 +1,18 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import axiosBase from 'axios'
-
-const axios = axiosBase.create({
-  baseURL: 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-  },
-  withCredentials: true,
-})
+import { useSignin } from '../../lib/next-hook-auth'
 
 const Signin: React.FC = () => {
   const { register, handleSubmit, errors } = useForm()
-  const onSubmit = async (data) => {
-    await axios.post('/administrators/sign_in', { administrator: data })
-    await axios.get('/me')
-  }
+  const { signin, loading } = useSignin(
+    '/administrators/sign_in',
+    '/admin/profile',
+    '/admin/me'
+  )
 
-  return (
+  return loading ? (
+    <></>
+  ) : (
     <>
       <div className="flex justify-center px-4 sm:px-6 lg:px-8 pt-8">
         <div className="max-w-md w-full space-y-8">
@@ -36,7 +30,7 @@ const Signin: React.FC = () => {
           <form
             className="mt-8 space-y-6"
             action="#"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(signin)}
           >
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px">
