@@ -1,9 +1,18 @@
 import React from 'react'
+import Layout from '../components/Layout'
 import Link from 'next/link'
+import { useAuth } from '../lib/next-hook-auth'
 
 const Home: React.FC = () => {
+  const { currentUser, signout } = useAuth(
+    '/admin/me',
+    '/administrators/sign_in',
+    '/administrators/sign_out',
+    '/'
+  )
+
   return (
-    <>
+    <Layout user={currentUser} signout={signout}>
       <div className="flex flex-col md:flex-row justify-center items-center">
         <div>
           <h1 className="text-6xl leading-tight text-gray-900 py-4 my-4 border-b-2">
@@ -24,7 +33,7 @@ const Home: React.FC = () => {
           <img src="/logo.png" />
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
 

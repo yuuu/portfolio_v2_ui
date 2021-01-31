@@ -1,4 +1,5 @@
 import React from 'react'
+import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -12,10 +13,18 @@ import {
   faTwitter,
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
+import { useAuth } from '../lib/next-hook-auth'
 
 const Profile: React.FC = () => {
+  const { currentUser, signout } = useAuth(
+    '/admin/me',
+    '/administrators/sign_in',
+    '/administrators/sign_out',
+    '/'
+  )
+
   return (
-    <>
+    <Layout user={currentUser} signout={signout}>
       <Header title="Profile" />
       <div className="flex flex-col md:flex-row space-x-4">
         <div className="flex-none flex justify-center">
@@ -100,7 +109,7 @@ const Profile: React.FC = () => {
           </table>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
 

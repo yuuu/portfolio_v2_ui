@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import { User } from '../lib/next-hook-auth'
 
 type Props = {
-  user?: User
+  user: string
+  signout: () => void
 }
 
-export const Footer: React.FC<Props> = ({ user }) => {
+export const Footer: React.FC<Props> = ({ user, signout }) => {
   return (
     <footer className="bg-gray-800 body-font">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +16,11 @@ export const Footer: React.FC<Props> = ({ user }) => {
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
             {user ? (
-              <a className="ml-3 text-sm text-white">Signout</a>
+              <Link href="/">
+                <a className="ml-3 text-sm text-white" onClick={signout}>
+                  Signout
+                </a>
+              </Link>
             ) : (
               <Link href="/admin/signin">
                 <a className="ml-3 text-sm text-white">Signin</a>

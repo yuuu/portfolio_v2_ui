@@ -1,9 +1,18 @@
 import React from 'react'
+import Layout from '../components/Layout'
 import Header from '../components/Haeder'
+import { useAuth } from '../lib/next-hook-auth'
 
 const Articles: React.FC = () => {
+  const { currentUser, signout } = useAuth(
+    '/admin/me',
+    '/administrators/sign_in',
+    '/administrators/sign_out',
+    '/'
+  )
+
   return (
-    <>
+    <Layout user={currentUser} signout={signout}>
       <Header title="Articles" />
       <div className="container px-5 mx-auto">
         <div className="flex flex-wrap -m-4">
@@ -43,7 +52,7 @@ const Articles: React.FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
 

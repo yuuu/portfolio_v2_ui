@@ -8,90 +8,57 @@ export type User = {
   updatedAt: string
 }
 
-export const useSignin = (signinPath, redirectPath, currentUserPath) => {
+export const useAuth = (
+  currentUserPath,
+  signinPath,
+  signoutPath,
+  redirectPath,
+  redirect = false
+) => {
+  1
   const [loading, setLoading] = useState(true)
+  const [currentUser, setCurrentUser] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
     ;(async () => {
       setLoading(true)
       try {
-        await axios.get(currentUserPath)
-        router.push(redirectPath)
-      } catch (e) {
+        const res = await axios.get(currentUserPath)
+        setCurrentUser(res.data)
         setLoading(false)
+      } catch (e) {
+        if (redirect) {
+          router.push(redirectPath)
+        } else {
+          setCurrentUser(null)
+          setLoading(false)
+        }
       }
     })()
   }, [])
 
-  const signin = async (user) => {
-    setLoading(true)
-    try {
-      await axios.post(signinPath, { administrator: user })
-      router.push(redirectPath)
-    } catch (e) {
-      setLoading(false)
-    }
-  }
-
-  return { signin, loading }
-}
-
-export const useSignout = (signoutPath, redirectPath, currentUserPath) => {
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
-
   const signout = async () => {
-    setLoading(true)
     try {
       await axios.get(currentUserPath)
       await axios.delete(signoutPath)
-    } catch (e) {
+      setCurrentUser(null)
       setLoading(false)
-      router.push(redirectPath)
+    } catch (e) {
+      // NOP
     }
   }
 
-  return { signout, loading }
-}
+  const signin = async (user) => {
+    try {
+      await axios.post(signinPath, { administrator: user })
 
-export const useAuth = (currentUserPath, redirectPath) => {
-  const [loading, setLoading] = useState(true)
-  const [currentUser, setCurrentUser] = useState(null)
-  const router = useRouter()
+      const res = await axios.get(currentUserPath)
+      setCurrentUser(res.data)
+    } catch (e) {
+      // NOP
+    }
+  }
 
-  useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      try {
-        const res = await axios.get(currentUserPath)
-        setCurrentUser(res.data)
-        setLoading(false)
-      } catch (e) {
-        router.push(redirectPath)
-      }
-    })()
-  }, [])
-
-  return { currentUser, loading }
-}
-
-export const useCurrentUser = (currentUserPath) => {
-  const [loading, setLoading] = useState(true)
-  const [currentUser, setCurrentUser] = useState(null)
-
-  useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      try {
-        const res = await axios.get(currentUserPath)
-        setCurrentUser(res.data)
-      } catch (e) {
-        // NOP
-      }
-      setLoading(false)
-    })()
-  }, [])
-
-  return { currentUser, loading }
+  return { currentUser, signin, signout, loading } // 呼び出し元のコンポーネントだとcurrentUserがnull
 }

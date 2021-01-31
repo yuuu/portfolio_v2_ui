@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import Layout from '../../components/Layout'
 import { useForm } from 'react-hook-form'
-import { useSignin } from '../../lib/next-hook-auth'
+import { useAuth } from '../../lib/next-hook-auth'
+import { useRouter } from 'next/router'
 
 const Signin: React.FC = () => {
   const { register, handleSubmit, errors } = useForm()
-  const { signin, loading } = useSignin(
+  const router = useRouter()
+  const { currentUser, signin, loading } = useAuth(
+    '/admin/me',
     '/administrators/sign_in',
-    '/admin/profile',
-    '/admin/me'
+    '/administrators/sign_out',
+    '/'
   )
 
-  return loading ? (
+  useEffect(() => {
+    !loading && currentUser && router.push('/admin/profile')
+  })
+
+  return loading || currentUser ? (
     <></>
   ) : (
-    <>
+    <Layout>
       <div className="flex justify-center px-4 sm:px-6 lg:px-8 pt-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -120,7 +128,7 @@ const Signin: React.FC = () => {
           </form>
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
 
