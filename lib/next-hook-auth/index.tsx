@@ -15,7 +15,6 @@ export const useAuth = (
   redirectPath,
   redirect = false
 ) => {
-  1
   const [loading, setLoading] = useState(true)
   const [currentUser, setCurrentUser] = useState(null)
   const router = useRouter()
@@ -42,10 +41,14 @@ export const useAuth = (
     try {
       await axios.get(currentUserPath)
       await axios.delete(signoutPath)
-      setCurrentUser(null)
-      setLoading(false)
     } catch (e) {
       // NOP
+    }
+    if (redirect) {
+      router.push(redirectPath)
+    } else {
+      setCurrentUser(null)
+      setLoading(false)
     }
   }
 

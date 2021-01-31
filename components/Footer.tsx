@@ -16,11 +16,9 @@ export const Footer: React.FC<Props> = ({ user, signout }) => {
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
             {user ? (
-              <Link href="/">
-                <a className="ml-3 text-sm text-white" onClick={signout}>
-                  Signout
-                </a>
-              </Link>
+              <button className="ml-3 text-sm text-white" onClick={signout}>
+                Signout
+              </button>
             ) : (
               <Link href="/admin/signin">
                 <a className="ml-3 text-sm text-white">Signin</a>
