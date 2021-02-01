@@ -8,7 +8,7 @@ const Signin: React.FC = () => {
   const { register, handleSubmit, errors } = useForm()
   const router = useRouter()
   const { currentUser, signin, loading } = useAuth(
-    '/admin/me',
+    '/administrators/me',
     '/administrators/sign_in',
     '/administrators/sign_out',
     '/'

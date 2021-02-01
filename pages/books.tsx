@@ -5,7 +5,7 @@ import { useAuth } from '../lib/next-hook-auth'
 
 const Books: React.FC = () => {
   const { currentUser, signout } = useAuth(
-    '/admin/me',
+    '/administrators/me',
     '/administrators/sign_in',
     '/administrators/sign_out',
     '/'

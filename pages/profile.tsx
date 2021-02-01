@@ -17,7 +17,7 @@ import { useAuth } from '../lib/next-hook-auth'
 
 const Profile: React.FC = () => {
   const { currentUser, signout } = useAuth(
-    '/admin/me',
+    '/administrators/me',
     '/administrators/sign_in',
     '/administrators/sign_out',
     '/'
