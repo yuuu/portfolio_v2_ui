@@ -3,6 +3,7 @@ import Layout from '../../components/Layout'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../lib/next-hook-auth'
 import { useRouter } from 'next/router'
+import { useToasts } from 'react-toast-notifications'
 
 const Signin: React.FC = () => {
   const { register, handleSubmit, errors } = useForm()
@@ -13,6 +14,18 @@ const Signin: React.FC = () => {
     '/administrators/sign_out',
     '/'
   )
+  const { addToast } = useToasts()
+  const onSubmit = async (data) => {
+    try {
+      await signin(data)
+      addToast('Signin Successfully', { appearance: 'success' })
+    } catch (e) {
+      addToast('Please reconfirm your input', { appearance: 'error' })
+    }
+  }
+  const onError = () => {
+    addToast('Please reconfirm your input', { appearance: 'error' })
+  }
 
   useEffect(() => {
     !loading && currentUser && router.push('/admin/profile')
@@ -38,7 +51,7 @@ const Signin: React.FC = () => {
           <form
             className="mt-8 space-y-6"
             action="#"
-            onSubmit={handleSubmit(signin)}
+            onSubmit={handleSubmit(onSubmit, onError)}
           >
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px">
@@ -51,7 +64,6 @@ const Signin: React.FC = () => {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                   ref={register({ required: true })}
@@ -67,7 +79,6 @@ const Signin: React.FC = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   ref={register({ required: true })}

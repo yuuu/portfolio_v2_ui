@@ -3,6 +3,7 @@ import Layout from '../../components/Layout'
 import Header from '../../components/Haeder'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useForm } from 'react-hook-form'
+import { useToasts } from 'react-toast-notifications'
 import {
   faHome,
   faBirthdayCake,
@@ -25,14 +26,19 @@ const Profile: React.FC = () => {
     '/',
     true
   )
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, errors } = useForm()
+  const { addToast } = useToasts()
   const onSubmit = async (data) => {
     try {
       const res = await axios.put('/administrators/profiles/1', data)
       setProfile(res.data)
+      addToast('Saved Successfully', { appearance: 'success' })
     } catch (e) {
-      // NOP
+      addToast(e.message, { appearance: 'error' })
     }
+  }
+  const onError = () => {
+    addToast('Please reconfirm your input', { appearance: 'error' })
   }
   const [profile, setProfile] = useState(null)
 
@@ -87,16 +93,19 @@ const Profile: React.FC = () => {
               <FontAwesomeIcon icon={faFacebook} size="2x" />
             </a>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit, onError)}>
             <label className="block mb-4">
               <span>自己紹介</span>
               <textarea
                 name="introduction"
                 className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring focus:ring-indigo-400 focus:ring-opacity-100"
                 rows={3}
-                ref={register}
+                ref={register({ required: true })}
                 defaultValue={profile?.introduction}
               />
+              <small className="mb-2 text-red-600 block">
+                {errors.introduction && <span>This field is required</span>}
+              </small>
             </label>
             <label className="block mb-4">
               <span>
@@ -107,9 +116,12 @@ const Profile: React.FC = () => {
                 name="residence"
                 className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring focus:ring-indigo-400 focus:ring-opacity-100"
                 rows={1}
-                ref={register}
+                ref={register({ required: true })}
                 defaultValue={profile?.residence}
               />
+              <small className="mb-2 text-red-600 block">
+                {errors.residence && <span>This field is required</span>}
+              </small>
             </label>
             <label className="block mb-4">
               <span>
@@ -124,9 +136,12 @@ const Profile: React.FC = () => {
                 name="birthplace"
                 className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring focus:ring-indigo-400 focus:ring-opacity-100"
                 rows={1}
-                ref={register}
+                ref={register({ required: true })}
                 defaultValue={profile?.birthplace}
               />
+              <small className="mb-2 text-red-600 block">
+                {errors.birthplace && <span>This field is required</span>}
+              </small>
             </label>
             <label className="block mb-4">
               <span>
@@ -141,9 +156,12 @@ const Profile: React.FC = () => {
                 name="birthday"
                 className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring focus:ring-indigo-400 focus:ring-opacity-100"
                 rows={1}
-                ref={register}
+                ref={register({ required: true })}
                 defaultValue={profile?.birthday}
               />
+              <small className="mb-2 text-red-600 block">
+                {errors.birthday && <span>This field is required</span>}
+              </small>
             </label>
             <label className="block mb-4">
               <span>
@@ -154,9 +172,12 @@ const Profile: React.FC = () => {
                 name="hobby"
                 className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring focus:ring-indigo-400 focus:ring-opacity-100"
                 rows={1}
-                ref={register}
+                ref={register({ required: true })}
                 defaultValue={profile?.hobby}
               />
+              <small className="mb-2 text-red-600 block">
+                {errors.hobby && <span>This field is required</span>}
+              </small>
             </label>
             <input
               type="submit"

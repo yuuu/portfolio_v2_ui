@@ -53,14 +53,10 @@ export const useAuth = (
   }
 
   const signin = async (user) => {
-    try {
-      await axios.post(signinPath, { administrator: user })
+    await axios.post(signinPath, { administrator: user })
 
-      const res = await axios.get(currentUserPath)
-      setCurrentUser(res.data)
-    } catch (e) {
-      // NOP
-    }
+    const res = await axios.get(currentUserPath)
+    setCurrentUser(res.data)
   }
 
   return { currentUser, signin, signout, loading } // 呼び出し元のコンポーネントだとcurrentUserがnull

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,6 +14,7 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 import { useAuth } from '../lib/next-hook-auth'
+import axios from '../lib/axios'
 
 const Profile: React.FC = () => {
   const { currentUser, signout } = useAuth(
@@ -22,6 +23,19 @@ const Profile: React.FC = () => {
     '/administrators/sign_out',
     '/'
   )
+
+  const [profile, setProfile] = useState(null)
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await axios.get('/profiles/1')
+        setProfile(res.data)
+      } catch (e) {
+        // NOP
+      }
+    })()
+  }, [])
 
   return (
     <Layout user={currentUser} signout={signout}>
@@ -62,10 +76,12 @@ const Profile: React.FC = () => {
             </a>
           </div>
           <p className="mb-4">
-            2018年から福岡でWeb/IoTエンジニアしてます。
-            2017年まで関西で組込みエンジニアしてました。
-            <br />
-            Railsを使った開発や、IoTに興味がある方はぜひお声掛けを！
+            {profile?.introduction.split('\n').map((str, index) => (
+              <React.Fragment key={index}>
+                {str}
+                <br />
+              </React.Fragment>
+            ))}
           </p>
           <table className="min-w-full divide-y divide-gray-200">
             <tbody>
@@ -74,7 +90,7 @@ const Profile: React.FC = () => {
                   <FontAwesomeIcon icon={faHome} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">居住地</th>
-                <td>福岡県糟屋郡</td>
+                <td>{profile?.residence}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -85,7 +101,7 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">出身地</th>
-                <td>山口県下松市</td>
+                <td>{profile?.birthplace}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -96,14 +112,14 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">生年月日</th>
-                <td>1989年7月27日</td>
+                <td>{profile?.birthday}</td>
               </tr>
               <tr>
                 <th className="py-2">
                   <FontAwesomeIcon icon={faHeart} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">趣味</th>
-                <td>ボウリング, ゲーム, ルービックキューブ</td>
+                <td>{profile?.hobby}</td>
               </tr>
             </tbody>
           </table>
