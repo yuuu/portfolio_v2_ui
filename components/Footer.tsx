@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useToasts } from 'react-toast-notifications'
 
 type Props = {
   user: string
@@ -7,6 +9,15 @@ type Props = {
 }
 
 export const Footer: React.FC<Props> = ({ user, signout }) => {
+  const router = useRouter()
+  const { addToast } = useToasts()
+
+  const onClick = async () => {
+    await signout()
+    addToast('Sign out Successfully', { appearance: 'success' })
+    router.push('/')
+  }
+
   return (
     <footer className="bg-gray-800 body-font">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +27,7 @@ export const Footer: React.FC<Props> = ({ user, signout }) => {
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
             {user ? (
-              <button className="ml-3 text-sm text-white" onClick={signout}>
+              <button className="ml-3 text-sm text-white" onClick={onClick}>
                 Signout
               </button>
             ) : (

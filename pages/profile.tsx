@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
+import LinkButton from '../components/LinkButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHome,
@@ -40,6 +41,11 @@ const Profile: React.FC = () => {
   return (
     <Layout user={currentUser} signout={signout}>
       <Header title="Profile" />
+      {currentUser && (
+        <div className="flex flex-row justify-end mb-4">
+          <LinkButton href="/admin/profile">Edit</LinkButton>
+        </div>
+      )}
       <div className="flex flex-col md:flex-row space-x-4">
         <div className="flex-none flex justify-center">
           <img

@@ -38,21 +38,13 @@ export const useAuth = (
   }, [])
 
   const signout = async () => {
-    try {
-      await axios.get(currentUserPath)
-      await axios.delete(signoutPath)
-    } catch (e) {
-      // NOP
-    }
-    if (redirect) {
-      router.push(redirectPath)
-    } else {
-      setCurrentUser(null)
-      setLoading(false)
-    }
+    await axios.get(currentUserPath)
+    await axios.delete(signoutPath)
+    setCurrentUser(null)
+    setLoading(false)
   }
 
-  const signin = async (user) => {
+  const signin = async (user: User) => {
     await axios.post(signinPath, { administrator: user })
 
     const res = await axios.get(currentUserPath)
