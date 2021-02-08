@@ -31,6 +31,7 @@ const ProfileForm: React.FC = () => {
   const [profile, setProfile] = useState(null)
 
   useEffect(() => {
+    // eslint-disable-next-line no-extra-semi
     ;(async () => {
       try {
         const res = await axios.get('/administrators/profiles/1')

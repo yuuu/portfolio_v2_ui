@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
+import LinkButton from '../components/LinkButton'
 
 const Articles: React.FC = () => {
   const { currentUser, signout } = useAuth(
@@ -14,8 +15,13 @@ const Articles: React.FC = () => {
   return (
     <Layout user={currentUser} signout={signout}>
       <Header title="Articles" />
-      <div className="container px-5 mx-auto">
-        <div className="flex flex-wrap -m-4">
+      {currentUser && (
+        <div className="flex flex-row justify-end mb-4">
+          <LinkButton href="/admin/articles">Edit</LinkButton>
+        </div>
+      )}
+      <div className="container mx-auto">
+        <div className="flex flex-wrap">
           <div className="-my-8 divide-y-2 divide-gray-100">
             {['article1', 'article2'].map((name) => (
               <div key={name} className="py-8 flex flex-wrap md:flex-nowrap">

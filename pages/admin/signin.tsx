@@ -24,7 +24,7 @@ const Signin: React.FC = () => {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="/logo.png"
+              src="/images/logo.png"
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

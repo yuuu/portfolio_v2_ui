@@ -30,7 +30,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div>
-          <img src="/logo.png" />
+          <img src="/images/logo.png" />
         </div>
       </div>
     </Layout>

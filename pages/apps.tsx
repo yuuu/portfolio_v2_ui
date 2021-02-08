@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
+import LinkButton from '../components/LinkButton'
 
 const Apps: React.FC = () => {
   const { currentUser, signout } = useAuth(
@@ -11,32 +12,84 @@ const Apps: React.FC = () => {
     '/'
   )
 
+  const apps = [
+    {
+      category: 'Web System',
+      title: "yuuu's portfolio",
+      description: 'このページです。Next.js + Ruby on Railsで構築しています。',
+      link: '/',
+      image: '/images/apps/portfolio_v2.png',
+    },
+    {
+      category: 'Web System',
+      title: "yuuu's portfolio (old)",
+      description: '旧ポートフォリオです。Nuxt.jsで作成しました。',
+      link: 'https://portfolio.y-uuu.net/',
+      image: '/images/apps/portfolio.png',
+    },
+    {
+      category: 'Web System',
+      title: 'C2Diary',
+      description: '自分専用の日記システムです。',
+      link: 'https://c2diary.herokuapp.com/',
+      image: '/images/apps/c2diary.png',
+    },
+    {
+      category: 'Slack Bot',
+      title: 'Tigers Eye',
+      description: '阪神タイガースの試合状況をSlackへ通知するアプリです。',
+      link: 'https://github.com/yuuu/tigers-eye',
+      image: '/images/apps/tigers-eye.png',
+    },
+    {
+      category: 'Plugin',
+      title: 'Redmine Nikoca Re Plugin',
+      description: 'Redmineにニコカレ機能を追加するためのプラグインです。',
+      link: 'https://github.com/yuuu/redmine_nikoca_re',
+      image: '/images/apps/nikokare.png',
+    },
+    {
+      category: 'Desktop App',
+      title: 'Minamoni',
+      description: 'ETロボコン用に製作したモニタリング用のツールです。',
+      link: 'https://github.com/yuuu/Minamoni',
+      image: '/images/apps/minamoni.png',
+    },
+  ]
+
   return (
     <Layout user={currentUser} signout={signout}>
       <Header title="Apps" />
+      {currentUser && (
+        <div className="flex flex-row justify-end mb-4">
+          <LinkButton href="/admin/apps">Edit</LinkButton>
+        </div>
+      )}
       <div className="container mx-auto">
-        <div className="flex flex-wrap -m-4">
-          {['app1', 'app2', 'app3'].map((name) => (
-            <div key={name} className="p-4 md:w-1/3">
+        <div className="flex flex-wrap">
+          {apps.map((app) => (
+            <div key={app.title} className="p-4 md:w-1/3">
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                 <img
                   className="lg:h-48 md:h-36 w-full object-cover object-center"
-                  src="https://dummyimage.com/720x400"
+                  src={app.image}
                   alt="blog"
                 />
                 <div className="p-6">
                   <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                    CATEGORY
+                    {app.category}
                   </h2>
                   <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                    {name}
+                    {app.title}
                   </h1>
-                  <p className="leading-relaxed mb-3">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
+                  <p className="leading-relaxed mb-3">{app.description}</p>
                   <div className="flex items-center flex-wrap ">
-                    <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                    <a
+                      className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
+                      href={app.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Learn More
                       <svg
                         className="w-4 h-4 ml-2"
@@ -51,35 +104,6 @@ const Apps: React.FC = () => {
                         <path d="M12 5l7 7-7 7"></path>
                       </svg>
                     </a>
-                    <span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                      </svg>
-                      1.2K
-                    </span>
-                    <span className="text-gray-400 inline-flex items-center leading-none text-sm">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                      </svg>
-                      6
-                    </span>
                   </div>
                 </div>
               </div>

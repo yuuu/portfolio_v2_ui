@@ -20,6 +20,7 @@ export const useAuth = (
   const router = useRouter()
 
   useEffect(() => {
+    // eslint-disable-next-line no-extra-semi
     ;(async () => {
       setLoading(true)
       try {

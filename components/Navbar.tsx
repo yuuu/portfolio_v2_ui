@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
                 <a>
                   <div className="flex space-x-4">
                     <div className="rounded-full h-8 w-8 bg-white">
-                      <img src="/logo.png" alt="Workflow"></img>
+                      <img src="/images/logo.png" alt="Workflow"></img>
                     </div>
                     <span className="text-white text-xl">
                       yuuu&lsquo;s portfolio

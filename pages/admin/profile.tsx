@@ -29,7 +29,7 @@ const Profile: React.FC = () => {
       <div className="flex flex-col md:flex-row md:space-x-4">
         <div className="flex-none flex justify-center">
           <img
-            src="/profile.png"
+            src="/images/profile.png"
             className="max-h-80 max-w-xs md:max-h-96 md:max-w-sm mb-4 shadow"
           />
         </div>

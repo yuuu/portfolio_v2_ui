@@ -28,6 +28,7 @@ const Profile: React.FC = () => {
   const [profile, setProfile] = useState(null)
 
   useEffect(() => {
+    // eslint-disable-next-line no-extra-semi
     ;(async () => {
       try {
         const res = await axios.get('/profiles/1')
@@ -49,7 +50,7 @@ const Profile: React.FC = () => {
       <div className="flex flex-col md:flex-row space-x-4">
         <div className="flex-none flex justify-center">
           <img
-            src="/profile.png"
+            src="/images/profile.png"
             className="max-h-80 max-w-xs md:max-h-96 md:max-w-sm mb-4 shadow"
           />
         </div>
