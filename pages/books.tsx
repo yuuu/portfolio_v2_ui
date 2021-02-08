@@ -42,7 +42,7 @@ const Books: React.FC = () => {
           {books.map((book) => (
             <div
               key={book.title}
-              className="flex pb-6 md:flex-row flex-col items-center"
+              className="flex mb-8 md:flex-row flex-col items-center"
             >
               <div className="md:w-1/4">
                 <img
@@ -51,11 +51,11 @@ const Books: React.FC = () => {
                   src={book.image}
                 />
               </div>
-              <div className="md:flex-grow md:w-1/2 md:pl-16 flex flex-col items-start text-left mb-16 mt-8">
+              <div className="md:flex-grow md:w-1/2 w-full md:pl-16 flex flex-col items-start text-left mt-4">
                 <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
                   {book.title}
                 </h1>
-                <p className="mb-8 leading-relaxed">{book.description}</p>
+                <p className="mb-2 leading-relaxed">{book.description}</p>
                 <div className="flex justify-center">
                   <LinkButton href={book.link}>Buy</LinkButton>
                 </div>
