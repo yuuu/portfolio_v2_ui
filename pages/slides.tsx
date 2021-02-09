@@ -4,7 +4,7 @@ import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
 
-const Articles: React.FC = () => {
+const Slides: React.FC = () => {
   const { currentUser, signout } = useAuth(
     '/administrators/me',
     '/administrators/sign_in',
@@ -23,7 +23,7 @@ const Articles: React.FC = () => {
       <div className="container mx-auto">
         <div className="flex flex-wrap">
           <div className="flex mb-8 md:flex-row flex-col items-center">
-            <div className="md:w-1/3 mb-2">
+            <div className="md:w-1/3 w-11/12 mb-2">
               <a
                 href="https://speakerdeck.com/yuuu/xian-dai-ban-pokeberuwozhi-eruji-shu-soracom-ug-explorer-2020-lt"
                 target="_blank"
@@ -63,4 +63,4 @@ const Articles: React.FC = () => {
   )
 }
 
-export default Articles
+export default Slides
