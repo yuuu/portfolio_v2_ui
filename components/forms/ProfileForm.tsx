@@ -17,7 +17,7 @@ const ProfileForm: React.FC = () => {
   const router = useRouter()
   const onSubmit = async (data) => {
     try {
-      const res = await axios.put('/administrators/profiles/1', data)
+      const res = await axios.put('/profiles/1', data)
       setProfile(res.data)
       addToast('Saved Successfully', { appearance: 'success' })
       router.push('/profile')
@@ -34,7 +34,7 @@ const ProfileForm: React.FC = () => {
     // eslint-disable-next-line no-extra-semi
     ;(async () => {
       try {
-        const res = await axios.get('/administrators/profiles/1')
+        const res = await axios.get('/profiles/1')
         setProfile(res.data)
       } catch (e) {
         // NOP
