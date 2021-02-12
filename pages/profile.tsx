@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import LinkButton from '../components/LinkButton'
@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { useAuth } from '../lib/next-hook-auth'
 import axios from '../lib/axios'
+import useSWR from 'swr'
 
 const Profile: React.FC = () => {
   const { currentUser, signout } = useAuth(
@@ -25,22 +26,11 @@ const Profile: React.FC = () => {
     '/'
   )
 
-  const [profile, setProfile] = useState(null)
-
-  useEffect(() => {
-    // eslint-disable-next-line no-extra-semi
-    ;(async () => {
-      try {
-        const res = await axios.get('/profiles/1')
-        setProfile(res.data)
-      } catch (e) {
-        // NOP
-      }
-    })()
-  }, [])
+  const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
+  const { data, error } = useSWR('/profiles/1', fetcher)
 
   return (
-    <Layout user={currentUser} signout={signout}>
+    <Layout loading={!data} error={error} user={currentUser} signout={signout}>
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
@@ -83,7 +73,7 @@ const Profile: React.FC = () => {
             </a>
           </div>
           <p className="mb-4">
-            {profile?.introduction.split('\n').map((str, index) => (
+            {data?.introduction.split('\n').map((str, index) => (
               <React.Fragment key={index}>
                 {str}
                 <br />
@@ -97,7 +87,7 @@ const Profile: React.FC = () => {
                   <FontAwesomeIcon icon={faHome} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">居住地</th>
-                <td>{profile?.residence}</td>
+                <td>{data?.residence}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -108,7 +98,7 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">出身地</th>
-                <td>{profile?.birthplace}</td>
+                <td>{data?.birthplace}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -119,14 +109,14 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">生年月日</th>
-                <td>{profile?.birthday}</td>
+                <td>{data?.birthday}</td>
               </tr>
               <tr>
                 <th className="py-2">
                   <FontAwesomeIcon icon={faHeart} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">趣味</th>
-                <td>{profile?.hobby}</td>
+                <td>{data?.hobby}</td>
               </tr>
             </tbody>
           </table>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Layout from '../../../../components/Layout'
 import Header from '../../../../components/Haeder'
 import ArticleForm from '../../../../components/forms/ArticleForm'
@@ -7,6 +7,7 @@ import { useAuth } from '../../../../lib/next-hook-auth'
 import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
 import axios from '../../../../lib/axios'
+import useSWR, { mutate } from 'swr'
 
 const Edit: React.FC = () => {
   const { loading, signout, currentUser } = useAuth(
@@ -16,15 +17,19 @@ const Edit: React.FC = () => {
     '/',
     true
   )
-  const [id, setId] = useState<number>()
-  const [article, setArticle] = useState(null)
   const { addToast } = useToasts()
   const router = useRouter()
 
+  const fetcher = () =>
+    router.query.id
+      ? axios.get(`/articles/${router.query.id}`).then((res) => res.data)
+      : null
+  const { data, error } = useSWR(`/articles/${router.query.id}`, fetcher)
+
   const onSubmit = async (data) => {
     try {
-      const res = await axios.put(`/articles/${id}`, data)
-      setArticle(res.data)
+      await axios.put(`/articles/${router.query.id}`, data)
+      mutate(`/articles/${router.query.id}`)
       addToast('Saved Successfully', { appearance: 'success' })
       router.push('/articles')
     } catch (e) {
@@ -36,34 +41,18 @@ const Edit: React.FC = () => {
     addToast('Please reconfirm your input', { appearance: 'error' })
   }
 
-  useEffect(() => {
-    // idがqueryで利用可能になったら処理される
-    if (router.asPath !== router.route) {
-      setId(Number(router.query.id))
-    }
-  }, [router])
-
-  useEffect(() => {
-    // eslint-disable-next-line no-extra-semi
-    ;(async () => {
-      if (!id) return
-
-      try {
-        const res = await axios.get(`/articles/${id}`)
-        setArticle(res.data)
-      } catch (e) {
-        // NOP
-      }
-    })()
-  }, [id])
-
   return (
-    <Layout loading={loading} user={currentUser} signout={signout}>
+    <Layout
+      loading={loading || !data}
+      error={error}
+      user={currentUser}
+      signout={signout}
+    >
       <Header title="Edit Article" />
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/articles">Back</LinkButton>
       </div>
-      <ArticleForm article={article} onSubmit={onSubmit} onError={onError} />
+      <ArticleForm article={data} onSubmit={onSubmit} onError={onError} />
     </Layout>
   )
 }

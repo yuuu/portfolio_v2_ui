@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
 import axios from '../lib/axios'
+import useSWR from 'swr'
 
 const Articles: React.FC = () => {
   const { currentUser, signout } = useAuth(
@@ -12,25 +13,15 @@ const Articles: React.FC = () => {
     '/administrators/sign_out',
     '/'
   )
-  const [articles, setArticles] = useState([])
-  useEffect(() => {
-    // eslint-disable-next-line no-extra-semi
-    ;(async () => {
-      try {
-        const res = await axios.get('/articles')
-        setArticles(res.data)
-      } catch (e) {
-        // NOP
-      }
-    })()
-  }, [])
+  const fetcher = () => axios.get('/articles').then((res) => res.data)
+  const { data, error } = useSWR('/articles', fetcher)
 
   return (
-    <Layout user={currentUser} signout={signout}>
+    <Layout loading={!data} error={error} user={currentUser} signout={signout}>
       <Header title="Articles" />
       <div className="container mx-auto">
         <div className="flex flex-wrap">
-          {articles.map((article) => (
+          {data?.map((article) => (
             <div
               className="flex mb-8 md:flex-row flex-col items-center"
               key={article.id}
