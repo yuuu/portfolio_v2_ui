@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from '../../lib/axios'
+import useSWR, { mutate } from 'swr'
 
 export type User = {
   id: number
@@ -15,42 +16,29 @@ export const useAuth = (
   redirectPath,
   redirect = false
 ) => {
-  const [loading, setLoading] = useState(true)
-  const [currentUser, setCurrentUser] = useState(null)
+  const fetcher = () => axios.get(currentUserPath).then((res) => res.data)
+  const { data, error } = useSWR(currentUserPath, fetcher)
   const router = useRouter()
 
   useEffect(() => {
-    // eslint-disable-next-line no-extra-semi
-    ;(async () => {
-      setLoading(true)
-      try {
-        const res = await axios.get(currentUserPath)
-        setCurrentUser(res.data)
-        setLoading(false)
-      } catch (e) {
-        if (redirect) {
-          router.push(redirectPath)
-        } else {
-          setCurrentUser(null)
-          setLoading(false)
-        }
-      }
-    })()
-  }, [])
+    if (error && redirect) router.push(redirectPath)
+  }, [data, error])
 
   const signout = async () => {
     await axios.get(currentUserPath)
     await axios.delete(signoutPath)
-    setCurrentUser(null)
-    setLoading(false)
+    await mutate(currentUserPath)
   }
 
   const signin = async (user: User) => {
     await axios.post(signinPath, { administrator: user })
-
-    const res = await axios.get(currentUserPath)
-    setCurrentUser(res.data)
+    await mutate(currentUserPath)
   }
 
-  return { currentUser, signin, signout, loading } // 呼び出し元のコンポーネントだとcurrentUserがnull
+  return {
+    currentUser: !error && data,
+    loading: !error && !data,
+    signin,
+    signout,
+  }
 }

@@ -14,11 +14,11 @@ const Signin: React.FC = () => {
   )
 
   useEffect(() => {
-    !loading && currentUser && router.push('/')
+    currentUser && router.push('/')
   })
 
   return (
-    <Layout loading={loading}>
+    <Layout loading={loading || currentUser}>
       <div className="flex justify-center px-4 sm:px-6 lg:px-8 pt-8">
         <div className="max-w-md w-full space-y-8">
           <div>

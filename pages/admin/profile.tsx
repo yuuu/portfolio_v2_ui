@@ -10,6 +10,10 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 import { useAuth } from '../../lib/next-hook-auth'
+import { useRouter } from 'next/router'
+import { useToasts } from 'react-toast-notifications'
+import axios from '../../lib/axios'
+import useSWR, { mutate } from 'swr'
 
 const Profile: React.FC = () => {
   const { loading, signout, currentUser } = useAuth(
@@ -19,9 +23,32 @@ const Profile: React.FC = () => {
     '/',
     true
   )
+  const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
+  const { data, error } = useSWR('/profiles/1', fetcher)
+
+  const router = useRouter()
+  const { addToast } = useToasts()
+  const onSubmit = async (data) => {
+    try {
+      await axios.put('/profiles/1', data)
+      mutate('/profiles/1')
+      addToast('Saved Successfully', { appearance: 'success' })
+      router.push('/profile')
+    } catch (e) {
+      addToast(e.message, { appearance: 'error' })
+    }
+  }
+  const onError = () => {
+    addToast('Please reconfirm your input', { appearance: 'error' })
+  }
 
   return (
-    <Layout loading={loading} user={currentUser} signout={signout}>
+    <Layout
+      loading={loading || !currentUser || !data}
+      error={error}
+      user={currentUser}
+      signout={signout}
+    >
       <Header title="Edit Profile" />
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/profile">Back</LinkButton>
@@ -61,7 +88,7 @@ const Profile: React.FC = () => {
               <FontAwesomeIcon icon={faFacebook} size="2x" />
             </a>
           </div>
-          <ProfileForm />
+          <ProfileForm profile={data} onSubmit={onSubmit} onError={onError} />
         </div>
       </div>
     </Layout>

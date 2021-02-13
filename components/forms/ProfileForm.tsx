@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
-import { useToasts } from 'react-toast-notifications'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faHome,
@@ -8,39 +7,24 @@ import {
   faHeart,
   faMapMarker,
 } from '@fortawesome/free-solid-svg-icons'
-import axios from '../../lib/axios'
-import { useRouter } from 'next/router'
 
-const ProfileForm: React.FC = () => {
+type Profile = {
+  introduction: string
+  residence: string
+  birthplace: string
+  birthday: string
+  hobby: string
+}
+
+type Props = {
+  profile?: Profile
+  onSubmit: (profile: Profile) => void
+  onError: () => void
+}
+
+const ProfileForm: React.FC<Props> = ({ profile, onSubmit, onError }) => {
   const { register, handleSubmit, errors } = useForm()
-  const { addToast } = useToasts()
-  const router = useRouter()
-  const onSubmit = async (data) => {
-    try {
-      const res = await axios.put('/profiles/1', data)
-      setProfile(res.data)
-      addToast('Saved Successfully', { appearance: 'success' })
-      router.push('/profile')
-    } catch (e) {
-      addToast(e.message, { appearance: 'error' })
-    }
-  }
-  const onError = () => {
-    addToast('Please reconfirm your input', { appearance: 'error' })
-  }
-  const [profile, setProfile] = useState(null)
 
-  useEffect(() => {
-    // eslint-disable-next-line no-extra-semi
-    ;(async () => {
-      try {
-        const res = await axios.get('/profiles/1')
-        setProfile(res.data)
-      } catch (e) {
-        // NOP
-      }
-    })()
-  }, [])
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)}>
       <label className="block mb-4">

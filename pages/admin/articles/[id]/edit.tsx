@@ -43,7 +43,7 @@ const Edit: React.FC = () => {
 
   return (
     <Layout
-      loading={loading || !data}
+      loading={loading || !currentUser || !data}
       error={error}
       user={currentUser}
       signout={signout}
