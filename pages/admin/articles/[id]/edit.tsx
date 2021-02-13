@@ -10,13 +10,7 @@ import axios from '../../../../lib/axios'
 import useSWR, { mutate } from 'swr'
 
 const Edit: React.FC = () => {
-  const { loading, signout, currentUser } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/',
-    true
-  )
+  const { currentUser, loading } = useAuth(true)
   const { addToast } = useToasts()
   const router = useRouter()
 
@@ -42,12 +36,7 @@ const Edit: React.FC = () => {
   }
 
   return (
-    <Layout
-      loading={loading || !currentUser || !data}
-      error={error}
-      user={currentUser}
-      signout={signout}
-    >
+    <Layout signedin={!!currentUser} loading={loading} error={error}>
       <Header title="Edit Article" />
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/articles">Back</LinkButton>

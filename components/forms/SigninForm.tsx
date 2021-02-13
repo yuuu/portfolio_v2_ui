@@ -1,19 +1,19 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useToasts } from 'react-toast-notifications'
-import { User } from '../../lib/next-hook-auth'
+import { SigninParams } from '../../lib/next-hook-auth'
 
 type Props = {
-  signin: (User) => void
+  signin: (SigninParams) => void
 }
 
 const SigninForm: React.FC<Props> = ({ signin }) => {
   const { register, handleSubmit, errors } = useForm()
   const { addToast } = useToasts()
 
-  const onSubmit = async (data: User) => {
+  const onSubmit = async (params: SigninParams) => {
     try {
-      await signin(data)
+      await signin(params)
       addToast('Sign in Successfully', { appearance: 'success' })
     } catch (e) {
       addToast('Please reconfirm your input', { appearance: 'error' })

@@ -7,17 +7,12 @@ import axios from '../lib/axios'
 import useSWR from 'swr'
 
 const Articles: React.FC = () => {
-  const { currentUser, signout } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/'
-  )
+  const { currentUser, loading } = useAuth()
   const fetcher = () => axios.get('/articles').then((res) => res.data)
   const { data, error } = useSWR('/articles', fetcher)
 
   return (
-    <Layout loading={!data} error={error} user={currentUser} signout={signout}>
+    <Layout signedin={!!currentUser} loading={loading || !data} error={error}>
       <Header title="Articles" />
       <div className="container mx-auto">
         <div className="flex flex-wrap">

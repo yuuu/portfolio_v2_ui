@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react'
 import Layout from '../../components/Layout'
 import SigninForm from '../../components/forms/SigninForm'
-import { useAuth } from '../../lib/next-hook-auth'
+import { useAuth, useSignin } from '../../lib/next-hook-auth'
 import { useRouter } from 'next/router'
 
 const Signin: React.FC = () => {
   const router = useRouter()
-  const { currentUser, signin, loading } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/'
-  )
+  const { currentUser, loading } = useAuth()
+  const signin = useSignin()
 
   useEffect(() => {
     currentUser && router.push('/')
   })
 
   return (
-    <Layout loading={loading || currentUser}>
+    <Layout signedin={!!currentUser} loading={loading || !!currentUser}>
       <div className="flex justify-center px-4 sm:px-6 lg:px-8 pt-8">
         <div className="max-w-md w-full space-y-8">
           <div>

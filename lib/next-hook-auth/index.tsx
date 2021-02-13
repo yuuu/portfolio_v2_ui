@@ -1,7 +1,66 @@
-import { useEffect } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from '../../lib/axios'
 import useSWR, { mutate } from 'swr'
+
+export type Props = {
+  currentUserPath: string
+  signinPath: string
+  signoutPath: string
+  redirectPath: string
+}
+
+export type AuthContext = {
+  config: Props
+}
+
+export const AuthContext = createContext<AuthContext>({
+  config: {
+    currentUserPath: '',
+    signinPath: '',
+    signoutPath: '',
+    redirectPath: '',
+  },
+})
+
+export const AuthProvider: React.FC<Props> = (props) => {
+  const context: AuthContext = {
+    config: {
+      currentUserPath: props.currentUserPath,
+      signinPath: props.signinPath,
+      signoutPath: props.signoutPath,
+      redirectPath: props.redirectPath,
+    },
+  }
+
+  return (
+    <AuthContext.Provider value={context}>
+      {props.children}
+    </AuthContext.Provider>
+  )
+}
+
+export type SigninParams = {
+  email: string
+  password: string
+}
+
+export const useSignin = () => {
+  const context = useContext(AuthContext)
+  return async (params: SigninParams) => {
+    await axios.post(context.config.signinPath, { administrator: params })
+    await mutate(context.config.currentUserPath)
+  }
+}
+
+export const useSignout = () => {
+  const context = useContext(AuthContext)
+  return async () => {
+    await axios.get(context.config.currentUserPath)
+    await axios.delete(context.config.signoutPath)
+    await mutate(context.config.currentUserPath)
+  }
+}
 
 export type User = {
   id: number
@@ -9,36 +68,19 @@ export type User = {
   updatedAt: string
 }
 
-export const useAuth = (
-  currentUserPath,
-  signinPath,
-  signoutPath,
-  redirectPath,
-  redirect = false
-) => {
-  const fetcher = () => axios.get(currentUserPath).then((res) => res.data)
-  const { data, error } = useSWR(currentUserPath, fetcher)
+export const useAuth = (redirect = false) => {
+  const context = useContext(AuthContext)
+  const fetcher = () =>
+    axios.get(context.config.currentUserPath).then((res) => res.data)
+  const { data, error } = useSWR(context.config.currentUserPath, fetcher)
   const router = useRouter()
 
   useEffect(() => {
-    if (error && redirect) router.push(redirectPath)
+    if (error && redirect) router.push(context.config.redirectPath)
   }, [data, error])
-
-  const signout = async () => {
-    await axios.get(currentUserPath)
-    await axios.delete(signoutPath)
-    await mutate(currentUserPath)
-  }
-
-  const signin = async (user: User) => {
-    await axios.post(signinPath, { administrator: user })
-    await mutate(currentUserPath)
-  }
 
   return {
     currentUser: !error && data,
-    loading: !error && !data,
-    signin,
-    signout,
+    loading: (!error && !data) || (redirect && !data),
   }
 }

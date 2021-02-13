@@ -16,18 +16,13 @@ import axios from '../../lib/axios'
 import useSWR, { mutate } from 'swr'
 
 const Profile: React.FC = () => {
-  const { loading, signout, currentUser } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/',
-    true
-  )
+  const { currentUser, loading } = useAuth(true)
   const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
   const { data, error } = useSWR('/profiles/1', fetcher)
 
   const router = useRouter()
   const { addToast } = useToasts()
+
   const onSubmit = async (data) => {
     try {
       await axios.put('/profiles/1', data)
@@ -43,12 +38,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <Layout
-      loading={loading || !currentUser || !data}
-      error={error}
-      user={currentUser}
-      signout={signout}
-    >
+    <Layout signedin={!!currentUser} loading={loading} error={error}>
       <Header title="Edit Profile" />
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/profile">Back</LinkButton>

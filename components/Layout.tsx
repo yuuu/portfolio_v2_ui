@@ -6,8 +6,7 @@ import HashLoader from 'react-spinners/HashLoader'
 type Props = {
   loading?: boolean
   error?: boolean
-  user?: string
-  signout?: () => void
+  signedin: boolean
 }
 
 const AlertMessage: React.FC = () => (
@@ -39,8 +38,7 @@ const AlertMessage: React.FC = () => (
 export const Layout: React.FC<Props> = ({
   loading,
   error,
-  user,
-  signout,
+  signedin,
   children,
 }) => {
   if (loading) {
@@ -62,7 +60,7 @@ export const Layout: React.FC<Props> = ({
             </div>
           </div>
         </main>
-        <Footer user={user} signout={signout} />
+        <Footer signedin={signedin} />
       </div>
     )
   } else {
@@ -76,7 +74,7 @@ export const Layout: React.FC<Props> = ({
             </div>
           </div>
         </main>
-        <Footer user={user} signout={signout} />
+        <Footer signedin={signedin} />
       </div>
     )
   }

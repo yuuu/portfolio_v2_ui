@@ -2,15 +2,16 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useToasts } from 'react-toast-notifications'
+import { useSignout } from '../lib/next-hook-auth'
 
 type Props = {
-  user: string
-  signout: () => void
+  signedin: boolean
 }
 
-export const Footer: React.FC<Props> = ({ user, signout }) => {
+export const Footer: React.FC<Props> = ({ signedin }) => {
   const router = useRouter()
   const { addToast } = useToasts()
+  const signout = useSignout()
 
   const onClick = async () => {
     await signout()
@@ -26,7 +27,7 @@ export const Footer: React.FC<Props> = ({ user, signout }) => {
             Copyright © 2021 yuuu. All Rights Reserved.
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
-            {user ? (
+            {signedin ? (
               <button className="ml-3 text-sm text-white" onClick={onClick}>
                 Signout
               </button>

@@ -19,18 +19,13 @@ import axios from '../lib/axios'
 import useSWR from 'swr'
 
 const Profile: React.FC = () => {
-  const { currentUser, signout } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/'
-  )
+  const { currentUser, loading } = useAuth()
 
   const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
   const { data, error } = useSWR('/profiles/1', fetcher)
 
   return (
-    <Layout loading={!data} error={error} user={currentUser} signout={signout}>
+    <Layout signedin={!!currentUser} loading={loading || !data} error={error}>
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">

@@ -5,15 +5,10 @@ import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
 
 const Slides: React.FC = () => {
-  const { currentUser, signout } = useAuth(
-    '/administrators/me',
-    '/administrators/sign_in',
-    '/administrators/sign_out',
-    '/'
-  )
+  const { currentUser, loading } = useAuth()
 
   return (
-    <Layout user={currentUser} signout={signout}>
+    <Layout signedin={!!currentUser} loading={loading}>
       <Header title="Slides" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
