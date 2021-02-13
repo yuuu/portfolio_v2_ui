@@ -16,6 +16,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         signoutPath="/administrators/sign_out"
         currentUserPath="/administrators/me"
         redirectPath="/"
+        resourceName="administrator"
       >
         <ToastProvider autoDismiss={true}>
           <Component {...pageProps} />

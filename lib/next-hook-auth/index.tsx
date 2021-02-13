@@ -8,6 +8,7 @@ export type Props = {
   signinPath: string
   signoutPath: string
   redirectPath: string
+  resourceName: string
 }
 
 export type AuthContext = {
@@ -20,6 +21,7 @@ export const AuthContext = createContext<AuthContext>({
     signinPath: '',
     signoutPath: '',
     redirectPath: '',
+    resourceName: 'user',
   },
 })
 
@@ -30,6 +32,7 @@ export const AuthProvider: React.FC<Props> = (props) => {
       signinPath: props.signinPath,
       signoutPath: props.signoutPath,
       redirectPath: props.redirectPath,
+      resourceName: props.resourceName,
     },
   }
 
@@ -48,7 +51,9 @@ export type SigninParams = {
 export const useSignin = () => {
   const context = useContext(AuthContext)
   return async (params: SigninParams) => {
-    await axios.post(context.config.signinPath, { administrator: params })
+    const signinParams = {}
+    signinParams[context.config.resourceName] = params
+    await axios.post(context.config.signinPath, signinParams)
     await mutate(context.config.currentUserPath)
   }
 }
