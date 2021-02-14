@@ -1,4 +1,5 @@
 import React from 'react'
+import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import LinkButton from '../components/LinkButton'
@@ -15,18 +16,34 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 import { useAuth } from '../lib/next-hook-auth'
-import { useProfile } from '../lib/client'
+import { Profile } from '../lib/client'
 
-const Profile: React.FC = () => {
+export const getStaticProps = async () => {
+  const res = await fetch(`http://localhost:3000/profiles/1`)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { profile: data },
+    revalidate: 60,
+  }
+}
+
+export const getStaticPaths = async () => ({
+  paths: [],
+  fallback: true,
+})
+
+const ProfilePage: NextPage<{ profile: Profile }> = ({ profile }) => {
   const { currentUser, loading } = useAuth()
-  const { profile, error } = useProfile()
 
   return (
-    <Layout
-      signedin={!!currentUser}
-      loading={loading || !profile}
-      error={error}
-    >
+    <Layout signedin={!!currentUser} loading={loading || !profile}>
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
@@ -122,4 +139,4 @@ const Profile: React.FC = () => {
   )
 }
 
-export default Profile
+export default ProfilePage
