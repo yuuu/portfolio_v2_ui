@@ -18,6 +18,6 @@ export const useProfile = (): { profile: Profile; error: any } => {
 export const useUpdateProfile = () => {
   return async (profile: Profile) => {
     await axios.put(`/profiles/1`, profile)
-    mutate(`/profiles/1`)
+    await mutate(`/profiles/1`)
   }
 }

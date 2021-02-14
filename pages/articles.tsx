@@ -29,11 +29,7 @@ const Articles: React.FC = () => {
               key={article.id}
             >
               <div className="md:w-1/3 mb-2">
-                <a
-                  href="https://qiita.com/Y_uuu/items/1651b181f06499c5cede"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={article.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
                     alt="hero"
@@ -45,11 +41,7 @@ const Articles: React.FC = () => {
                 <h3 className="text-xl text-gray-600 font-bold mb-2">
                   {article.publishedAt}
                 </h3>
-                <a
-                  href="https://qiita.com/Y_uuu/items/1651b181f06499c5cede"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={article.link} target="_blank" rel="noreferrer">
                   <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
                     {article.title}
                   </h1>

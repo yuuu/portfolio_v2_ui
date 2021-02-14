@@ -26,13 +26,13 @@ export const useArticle = (id: number): { article: Article; error: any } => {
 export const useCreateArticle = () => {
   return async (article: Article) => {
     await axios.post(`/articles/`, article)
-    mutate(`/articles/`)
+    await mutate(`/articles/`)
   }
 }
 
 export const useUpdateArticle = () => {
   return async (id: number, article: Article) => {
     await axios.put(`/articles/${id}`, article)
-    mutate(`/articles/${id}`)
+    await mutate(`/articles/${id}`)
   }
 }
