@@ -34,11 +34,6 @@ export const getStaticProps = async () => {
   }
 }
 
-export const getStaticPaths = async () => ({
-  paths: [],
-  fallback: true,
-})
-
 const ProfilePage: NextPage<{ profile: Profile }> = ({ profile }) => {
   const { currentUser, loading } = useAuth()
 
