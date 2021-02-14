@@ -3,20 +3,27 @@ import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
-import axios from '../lib/axios'
-import useSWR from 'swr'
+import { useArticles } from '../lib/client'
 
 const Articles: React.FC = () => {
   const { currentUser, loading } = useAuth()
-  const fetcher = () => axios.get('/articles').then((res) => res.data)
-  const { data, error } = useSWR('/articles', fetcher)
+  const { articles, error } = useArticles()
 
   return (
-    <Layout signedin={!!currentUser} loading={loading || !data} error={error}>
+    <Layout
+      signedin={!!currentUser}
+      loading={loading || !articles}
+      error={error}
+    >
       <Header title="Articles" />
+      {currentUser && (
+        <div className="flex flex-row justify-end mb-4">
+          <LinkButton href="/admin/articles/new">New</LinkButton>
+        </div>
+      )}
       <div className="container mx-auto">
         <div className="flex flex-wrap">
-          {data?.map((article) => (
+          {articles?.map((article) => (
             <div
               className="flex mb-8 md:flex-row flex-col items-center"
               key={article.id}

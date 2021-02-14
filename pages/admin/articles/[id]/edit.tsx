@@ -6,24 +6,18 @@ import LinkButton from '../../../../components/LinkButton'
 import { useAuth } from '../../../../lib/next-hook-auth'
 import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
-import axios from '../../../../lib/axios'
-import useSWR, { mutate } from 'swr'
+import { useArticle, useUpdateArticle } from '../../../../lib/client'
 
 const Edit: React.FC = () => {
   const { currentUser, loading } = useAuth(true)
   const { addToast } = useToasts()
   const router = useRouter()
+  const { article, error } = useArticle(Number(router.query.id))
+  const update = useUpdateArticle()
 
-  const fetcher = () =>
-    router.query.id
-      ? axios.get(`/articles/${router.query.id}`).then((res) => res.data)
-      : null
-  const { data, error } = useSWR(`/articles/${router.query.id}`, fetcher)
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (article) => {
     try {
-      await axios.put(`/articles/${router.query.id}`, data)
-      mutate(`/articles/${router.query.id}`)
+      update(Number(router.query.id), article)
       addToast('Saved Successfully', { appearance: 'success' })
       router.push('/articles')
     } catch (e) {
@@ -41,7 +35,7 @@ const Edit: React.FC = () => {
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/articles">Back</LinkButton>
       </div>
-      <ArticleForm article={data} onSubmit={onSubmit} onError={onError} />
+      <ArticleForm article={article} onSubmit={onSubmit} onError={onError} />
     </Layout>
   )
 }

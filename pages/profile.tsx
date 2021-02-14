@@ -15,17 +15,18 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons'
 import { useAuth } from '../lib/next-hook-auth'
-import axios from '../lib/axios'
-import useSWR from 'swr'
+import { useProfile } from '../lib/client'
 
 const Profile: React.FC = () => {
   const { currentUser, loading } = useAuth()
-
-  const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
-  const { data, error } = useSWR('/profiles/1', fetcher)
+  const { profile, error } = useProfile()
 
   return (
-    <Layout signedin={!!currentUser} loading={loading || !data} error={error}>
+    <Layout
+      signedin={!!currentUser}
+      loading={loading || !profile}
+      error={error}
+    >
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
@@ -68,7 +69,7 @@ const Profile: React.FC = () => {
             </a>
           </div>
           <p className="mb-4">
-            {data?.introduction.split('\n').map((str, index) => (
+            {profile?.introduction.split('\n').map((str, index) => (
               <React.Fragment key={index}>
                 {str}
                 <br />
@@ -82,7 +83,7 @@ const Profile: React.FC = () => {
                   <FontAwesomeIcon icon={faHome} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">居住地</th>
-                <td>{data?.residence}</td>
+                <td>{profile?.residence}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -93,7 +94,7 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">出身地</th>
-                <td>{data?.birthplace}</td>
+                <td>{profile?.birthplace}</td>
               </tr>
               <tr>
                 <th className="py-2">
@@ -104,14 +105,14 @@ const Profile: React.FC = () => {
                   />
                 </th>
                 <th className="py-2 text-left">生年月日</th>
-                <td>{data?.birthday}</td>
+                <td>{profile?.birthday}</td>
               </tr>
               <tr>
                 <th className="py-2">
                   <FontAwesomeIcon icon={faHeart} size="lg" className="mr-2" />
                 </th>
                 <th className="py-2 text-left">趣味</th>
-                <td>{data?.hobby}</td>
+                <td>{profile?.hobby}</td>
               </tr>
             </tbody>
           </table>

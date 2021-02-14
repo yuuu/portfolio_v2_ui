@@ -12,21 +12,19 @@ import {
 import { useAuth } from '../../lib/next-hook-auth'
 import { useRouter } from 'next/router'
 import { useToasts } from 'react-toast-notifications'
-import axios from '../../lib/axios'
-import useSWR, { mutate } from 'swr'
+import { useProfile, useUpdateProfile } from '../../lib/client'
 
 const Profile: React.FC = () => {
   const { currentUser, loading } = useAuth(true)
-  const fetcher = () => axios.get('/profiles/1').then((res) => res.data)
-  const { data, error } = useSWR('/profiles/1', fetcher)
+  const { profile, error } = useProfile()
+  const update = useUpdateProfile()
 
   const router = useRouter()
   const { addToast } = useToasts()
 
   const onSubmit = async (data) => {
     try {
-      await axios.put('/profiles/1', data)
-      mutate('/profiles/1')
+      update(data)
       addToast('Saved Successfully', { appearance: 'success' })
       router.push('/profile')
     } catch (e) {
@@ -38,7 +36,11 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <Layout signedin={!!currentUser} loading={loading} error={error}>
+    <Layout
+      signedin={!!currentUser}
+      loading={loading || !profile}
+      error={error}
+    >
       <Header title="Edit Profile" />
       <div className="flex flex-row justify-end mb-4">
         <LinkButton href="/profile">Back</LinkButton>
@@ -78,7 +80,11 @@ const Profile: React.FC = () => {
               <FontAwesomeIcon icon={faFacebook} size="2x" />
             </a>
           </div>
-          <ProfileForm profile={data} onSubmit={onSubmit} onError={onError} />
+          <ProfileForm
+            profile={profile}
+            onSubmit={onSubmit}
+            onError={onError}
+          />
         </div>
       </div>
     </Layout>
