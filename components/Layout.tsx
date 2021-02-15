@@ -7,6 +7,7 @@ type Props = {
   loading?: boolean
   error?: boolean
   signedin: boolean
+  generatedAt?: string
 }
 
 const AlertMessage: React.FC = () => (
@@ -39,6 +40,7 @@ export const Layout: React.FC<Props> = ({
   loading,
   error,
   signedin,
+  generatedAt,
   children,
 }) => {
   if (loading) {
@@ -74,7 +76,7 @@ export const Layout: React.FC<Props> = ({
             </div>
           </div>
         </main>
-        <Footer signedin={signedin} />
+        <Footer signedin={signedin} generatedAt={generatedAt} />
       </div>
     )
   }

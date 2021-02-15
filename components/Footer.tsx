@@ -6,9 +6,10 @@ import { useSignout } from '../lib/next-hook-auth'
 
 type Props = {
   signedin: boolean
+  generatedAt?: string
 }
 
-export const Footer: React.FC<Props> = ({ signedin }) => {
+export const Footer: React.FC<Props> = ({ signedin, generatedAt }) => {
   const router = useRouter()
   const { addToast } = useToasts()
   const signout = useSignout()
@@ -27,6 +28,9 @@ export const Footer: React.FC<Props> = ({ signedin }) => {
             Copyright © 2021 yuuu. All Rights Reserved.
           </p>
           <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
+            <span className="text-sm text-white mr-3">
+              {generatedAt && `generated at ${generatedAt}`}
+            </span>
             {signedin ? (
               <button className="ml-3 text-sm text-white" onClick={onClick}>
                 Signout

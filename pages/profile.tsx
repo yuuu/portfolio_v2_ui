@@ -29,16 +29,23 @@ export const getStaticProps = async () => {
   }
 
   return {
-    props: { profile: data },
-    revalidate: 60,
+    props: { profile: data, generatedAt: new Date().toLocaleString('ja') },
+    revalidate: 10,
   }
 }
 
-const ProfilePage: NextPage<{ profile: Profile }> = ({ profile }) => {
+const ProfilePage: NextPage<{ profile: Profile; generatedAt: string }> = ({
+  profile,
+  generatedAt,
+}) => {
   const { currentUser } = useAuth()
 
   return (
-    <Layout signedin={!!currentUser} loading={!profile}>
+    <Layout
+      signedin={!!currentUser}
+      loading={!profile}
+      generatedAt={generatedAt}
+    >
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
