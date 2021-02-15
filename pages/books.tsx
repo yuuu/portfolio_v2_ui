@@ -37,7 +37,7 @@ const Books: React.FC = () => {
           {books.map((book) => (
             <div
               key={book.title}
-              className="flex mb-8 md:flex-row flex-col items-center"
+              className="flex mb-8 md:flex-row w-full flex-col items-center"
             >
               <div className="md:w-1/4">
                 <img

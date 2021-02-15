@@ -17,8 +17,8 @@ const Slides: React.FC = () => {
       )}
       <div className="container mx-auto">
         <div className="flex flex-wrap">
-          <div className="flex mb-8 md:flex-row flex-col items-center">
-            <div className="md:w-1/3 w-11/12 mb-2">
+          <div className="flex mb-8 md:flex-row w-full flex-col items-center">
+            <div className="md:w-1/3 mb-2">
               <a
                 href="https://speakerdeck.com/yuuu/xian-dai-ban-pokeberuwozhi-eruji-shu-soracom-ug-explorer-2020-lt"
                 target="_blank"

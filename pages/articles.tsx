@@ -21,7 +21,7 @@ const Articles: React.FC = () => {
         <div className="flex flex-wrap">
           {articles?.map((article) => (
             <div
-              className="flex mb-8 md:flex-row flex-col items-center"
+              className="flex mb-8 md:flex-row w-full flex-col items-center"
               key={article.id}
             >
               <div className="md:w-1/3 mb-2">
