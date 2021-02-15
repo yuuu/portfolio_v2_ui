@@ -23,21 +23,24 @@ export const Footer: React.FC<Props> = ({ signedin, generatedAt }) => {
   return (
     <footer className="bg-gray-800 body-font">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
-          <p className="text-sm text-white sm:py-2">
-            Copyright © 2021 yuuu. All Rights Reserved.
-          </p>
-          <span className="inline-flex sm:ml-auto justify-center sm:justify-start">
-            <span className="text-sm text-white mr-3">
+        <div className="flex items-center justify-between h-14">
+          <p className="flex flex-col items-text-sm text-white sm:py-2">
+            <span>Copyright © 2021 yuuu. All Rights Reserved.</span>
+            <span className="text-xs">
               {generatedAt && `generated at ${generatedAt}`}
             </span>
+          </p>
+          <span className="inline-flex flex-col sm:ml-auto justify-end">
             {signedin ? (
-              <button className="ml-3 text-sm text-white" onClick={onClick}>
+              <button
+                className="text-sm text-white text-right"
+                onClick={onClick}
+              >
                 Signout
               </button>
             ) : (
               <Link href="/admin/signin">
-                <a className="ml-3 text-sm text-white">Signin</a>
+                <a className="text-sm text-white text-right">Signin</a>
               </Link>
             )}
           </span>
