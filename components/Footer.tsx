@@ -24,8 +24,10 @@ export const Footer: React.FC<Props> = ({ signedin, generatedAt }) => {
     <footer className="bg-gray-800 body-font">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
-          <p className="flex flex-col items-text-sm text-white sm:py-2">
-            <span>Copyright © 2021 yuuu. All Rights Reserved.</span>
+          <p className="flex flex-col text-white sm:py-2">
+            <span className="text-xs">
+              Copyright © 2021 yuuu. All Rights Reserved.
+            </span>
             <span className="text-xs">
               {generatedAt && `generated at ${generatedAt}`}
             </span>
