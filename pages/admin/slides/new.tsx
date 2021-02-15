@@ -1,24 +1,24 @@
 import React from 'react'
 import Layout from '../../../components/Layout'
 import Header from '../../../components/Haeder'
-import ArticleForm from '../../../components/forms/ArticleForm'
+import SlidesForm from '../../../components/forms/SlideForm'
 import LinkButton from '../../../components/LinkButton'
 import { useAuth } from '../../../lib/next-hook-auth'
 import { useToasts } from 'react-toast-notifications'
 import { useRouter } from 'next/router'
-import { useCreateArticle } from '../../../lib/client'
+import { useCreateSlide } from '../../../lib/client'
 
 const New: React.FC = () => {
   const { currentUser, loading } = useAuth(true)
   const { addToast } = useToasts()
   const router = useRouter()
-  const create = useCreateArticle()
+  const create = useCreateSlide()
 
-  const onSubmit = async (article) => {
+  const onSubmit = async (slide) => {
     try {
-      create(article)
+      create(slide)
       addToast('Saved Successfully', { appearance: 'success' })
-      router.push('/articles')
+      router.push('/slides')
     } catch (e) {
       addToast(e.message, { appearance: 'error' })
     }
@@ -30,11 +30,11 @@ const New: React.FC = () => {
 
   return (
     <Layout signedin={!!currentUser} loading={loading}>
-      <Header title="New Article" />
+      <Header title="New Slide" />
       <div className="flex flex-row justify-end mb-4">
-        <LinkButton href="/articles">Back</LinkButton>
+        <LinkButton href="/slides">Back</LinkButton>
       </div>
-      <ArticleForm onSubmit={onSubmit} onError={onError} />
+      <SlidesForm onSubmit={onSubmit} onError={onError} />
     </Layout>
   )
 }
