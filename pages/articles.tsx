@@ -6,15 +6,11 @@ import LinkButton from '../components/LinkButton'
 import { useArticles } from '../lib/client'
 
 const Articles: React.FC = () => {
-  const { currentUser, loading } = useAuth()
+  const { currentUser } = useAuth()
   const { articles, error } = useArticles()
 
   return (
-    <Layout
-      signedin={!!currentUser}
-      loading={loading || !articles}
-      error={error}
-    >
+    <Layout signedin={!!currentUser} loading={!articles} error={error}>
       <Header title="Articles" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">

@@ -19,7 +19,7 @@ import { useAuth } from '../lib/next-hook-auth'
 import { Profile } from '../lib/client'
 
 export const getStaticProps = async () => {
-  const res = await fetch(`http://localhost:3000/profiles/1`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/profiles/1`)
   const data = await res.json()
 
   if (!data) {
@@ -35,10 +35,10 @@ export const getStaticProps = async () => {
 }
 
 const ProfilePage: NextPage<{ profile: Profile }> = ({ profile }) => {
-  const { currentUser, loading } = useAuth()
+  const { currentUser } = useAuth()
 
   return (
-    <Layout signedin={!!currentUser} loading={loading || !profile}>
+    <Layout signedin={!!currentUser} loading={!profile}>
       <Header title="Profile" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">

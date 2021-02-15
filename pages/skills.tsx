@@ -5,7 +5,7 @@ import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
 
 const Skills: React.FC = () => {
-  const { currentUser, loading } = useAuth()
+  const { currentUser } = useAuth()
 
   const skills = [
     { name: 'Ruby', image: 'ruby.png' },
@@ -38,7 +38,7 @@ const Skills: React.FC = () => {
   ]
 
   return (
-    <Layout signedin={!!currentUser} loading={loading}>
+    <Layout signedin={!!currentUser}>
       <Header title="Skills" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">

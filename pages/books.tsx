@@ -5,7 +5,7 @@ import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
 
 const Books: React.FC = () => {
-  const { currentUser, loading } = useAuth()
+  const { currentUser } = useAuth()
 
   const books = [
     {
@@ -25,7 +25,7 @@ const Books: React.FC = () => {
   ]
 
   return (
-    <Layout signedin={!!currentUser} loading={loading}>
+    <Layout signedin={!!currentUser}>
       <Header title="Books" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">

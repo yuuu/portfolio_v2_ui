@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { useAuth } from '../lib/next-hook-auth'
 
 const Home: React.FC = () => {
-  const { currentUser, loading } = useAuth()
+  const { currentUser } = useAuth()
 
   return (
-    <Layout signedin={!!currentUser} loading={loading}>
+    <Layout signedin={!!currentUser}>
       <div className="flex flex-col md:flex-row justify-center items-center">
         <div>
           <h1 className="text-6xl leading-tight text-gray-900 py-4 my-4 border-b-2">
