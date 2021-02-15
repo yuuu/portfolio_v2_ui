@@ -1,16 +1,39 @@
 import React from 'react'
+import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
-import { useArticles } from '../lib/client'
+import { Article } from '../lib/client'
 
-const Articles: React.FC = () => {
+export const getStaticProps = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/articles`)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { articles: data, generatedAt: new Date().toLocaleString('ja') },
+    revalidate: 10,
+  }
+}
+
+const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
+  articles,
+  generatedAt,
+}) => {
   const { currentUser } = useAuth()
-  const { articles, error } = useArticles()
 
   return (
-    <Layout signedin={!!currentUser} loading={!articles} error={error}>
+    <Layout
+      signedin={!!currentUser}
+      loading={!articles}
+      generatedAt={generatedAt}
+    >
       <Header title="Articles" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
