@@ -31,9 +31,9 @@ const Edit: React.FC = () => {
 
   return (
     <Layout signedin={!!currentUser} loading={loading} error={error}>
-      <Header title="Edit Article" />
+      <Header title="Edit Slide" />
       <div className="flex flex-row justify-end mb-4">
-        <LinkButton href="/articles">Back</LinkButton>
+        <LinkButton href="/slides">Back</LinkButton>
       </div>
       <SlideForm slide={slide} onSubmit={onSubmit} onError={onError} />
     </Layout>
