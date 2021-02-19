@@ -51,7 +51,7 @@ const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
                 <a href={article.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
-                    alt="hero"
+                    alt={article.title}
                     src={article.image}
                   />
                 </a>

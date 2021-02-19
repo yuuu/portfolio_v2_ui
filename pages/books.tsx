@@ -1,35 +1,39 @@
 import React from 'react'
+import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import Header from '../components/Haeder'
 import { useAuth } from '../lib/next-hook-auth'
 import LinkButton from '../components/LinkButton'
+import { Book } from '../lib/client'
 
-const Books: React.FC = () => {
+export const getStaticProps = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/books`)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { books: data, generatedAt: new Date().toLocaleString('ja') },
+    revalidate: 10,
+  }
+}
+
+const Books: NextPage<{ books: Book[]; generatedAt: string }> = ({
+  books,
+  generatedAt,
+}) => {
   const { currentUser } = useAuth()
 
-  const books = [
-    {
-      title: 'AWSとM5StickCで作るIoT開発入門',
-      description:
-        '本書は、初めてIoT開発を経験する人向けに、設計・実装・テストの流れを解説した書籍です。IoT開発に必要な技術要素や開発そのものの流れを、読者のみなさまに理解してもらうことを目的に執筆しました。',
-      link: 'https://techbookfest.org/product/5189029702139904',
-      image: '/images/books/iot_dev_starting_book.png',
-    },
-    {
-      title: '作って学ぶSORACOM入門',
-      description:
-        '本書はIoT向けの無線通信プラットフォームである「SORACOM」の入門書です。読者の皆様がより簡単にSORACOMを使えるようになることを目的に執筆しました。',
-      link: 'https://techbookfest.org/product/5273269798174720',
-      image: '/images/books/build_and_learn_soracom_book.png',
-    },
-  ]
-
   return (
-    <Layout signedin={!!currentUser}>
+    <Layout signedin={!!currentUser} loading={!books} generatedAt={generatedAt}>
       <Header title="Books" />
       {currentUser && (
         <div className="flex flex-row justify-end mb-4">
-          <LinkButton href="/admin/books">Edit</LinkButton>
+          <LinkButton href="/admin/books/new">New</LinkButton>
         </div>
       )}
       <div className="container mx-auto">
@@ -40,20 +44,28 @@ const Books: React.FC = () => {
               className="flex mb-8 md:flex-row w-full flex-col items-center"
             >
               <div className="md:w-1/4">
-                <img
-                  className="object-cover object-center rounded"
-                  alt="hero"
-                  src={book.image}
-                />
+                <a href={book.link} target="_blank" rel="noreferrer">
+                  <img
+                    className="object-cover object-center rounded"
+                    alt={book.title}
+                    src={book.image}
+                  />
+                </a>
               </div>
               <div className="md:flex-grow md:w-1/2 w-full md:pl-16 flex flex-col items-start text-left mt-4">
-                <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
-                  {book.title}
-                </h1>
+                <a href={book.link} target="_blank" rel="noreferrer">
+                  <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
+                    {book.title}
+                  </h1>
+                </a>
                 <p className="mb-2 leading-relaxed">{book.description}</p>
-                <div className="flex justify-center">
-                  <LinkButton href={book.link}>Buy</LinkButton>
-                </div>
+                {currentUser && (
+                  <div className="flex flex-row justify-end mt-4 mb-4">
+                    <LinkButton href={`/admin/books/${book.id}/edit`}>
+                      Edit
+                    </LinkButton>
+                  </div>
+                )}
               </div>
             </div>
           ))}

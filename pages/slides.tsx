@@ -47,7 +47,7 @@ const Slides: NextPage<{ slides: Slide[]; generatedAt: string }> = ({
                 <a href={slide.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
-                    alt="hero"
+                    alt={slide.title}
                     src={slide.image}
                   />
                 </a>
