@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form'
 import { useDropzone } from 'react-dropzone'
 import axios from '../../lib/axios'
 
-type Book = {
+type App = {
   id: number
   title: string
+  category: string
   description: string
   image: string
   link: string
@@ -13,14 +14,14 @@ type Book = {
 }
 
 type Props = {
-  book?: Book
-  onSubmit: (book: Book) => void
+  app?: App
+  onSubmit: (app: App) => void
   onError: () => void
 }
 
-const BookForm: React.FC<Props> = ({ book, onSubmit, onError }) => {
-  const [imageUrl, setImageUrl] = useState(book?.image)
-  const [imageKey, setImageKey] = useState(book?.key)
+const AppForm: React.FC<Props> = ({ app, onSubmit, onError }) => {
+  const [imageUrl, setImageUrl] = useState(app?.image)
+  const [imageKey, setImageKey] = useState(app?.key)
   const { register, handleSubmit, errors } = useForm()
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach(async (file) => {
@@ -43,16 +44,29 @@ const BookForm: React.FC<Props> = ({ book, onSubmit, onError }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)}>
       <label className="block mb-4">
-        <span>書籍名</span>
+        <label className="block mb-4">
+          <span>アプリ名</span>
+          <input
+            type="text"
+            name="title"
+            className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring-1"
+            ref={register({ required: true })}
+            defaultValue={app?.title}
+          />
+          <small className="mb-2 text-red-600 block">
+            {errors.title && <span>This field is required</span>}
+          </small>
+        </label>
+        <span>カテゴリ</span>
         <input
           type="text"
-          name="title"
+          name="category"
           className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring-1"
           ref={register({ required: true })}
-          defaultValue={book?.title}
+          defaultValue={app?.category}
         />
         <small className="mb-2 text-red-600 block">
-          {errors.title && <span>This field is required</span>}
+          {errors.category && <span>This field is required</span>}
         </small>
       </label>
       <label className="block mb-4">
@@ -62,14 +76,14 @@ const BookForm: React.FC<Props> = ({ book, onSubmit, onError }) => {
           className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring-1"
           rows={3}
           ref={register({ required: true })}
-          defaultValue={book?.description}
+          defaultValue={app?.description}
         />
         <small className="mb-2 text-red-600 block">
           {errors.description && <span>This field is required</span>}
         </small>
       </label>
       <label className="block mb-4">
-        <span>表紙画像</span>
+        <span>スクリーンショット</span>
         {imageKey && <img src={imageUrl} className="h-32 m-4" />}
         <div
           className="border-dashed border-2 h-32 rounded flex justify-center items-center"
@@ -95,7 +109,7 @@ const BookForm: React.FC<Props> = ({ book, onSubmit, onError }) => {
           name="link"
           className="mt-2 mb-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-100 focus:ring-1"
           ref={register({ required: true })}
-          defaultValue={book?.link}
+          defaultValue={app?.link}
         />
         <small className="mb-2 text-red-600 block">
           {errors.link && <span>This field is required</span>}
@@ -110,4 +124,4 @@ const BookForm: React.FC<Props> = ({ book, onSubmit, onError }) => {
   )
 }
 
-export default BookForm
+export default AppForm

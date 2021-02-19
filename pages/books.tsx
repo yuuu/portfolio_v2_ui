@@ -38,9 +38,9 @@ const Books: NextPage<{ books: Book[]; generatedAt: string }> = ({
       )}
       <div className="container mx-auto">
         <div className="flex flex-wrap">
-          {books.map((book) => (
+          {books?.map((book) => (
             <div
-              key={book.title}
+              key={book.id}
               className="flex mb-8 md:flex-row w-full flex-col items-center"
             >
               <div className="md:w-1/4">
