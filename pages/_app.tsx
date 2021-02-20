@@ -14,7 +14,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:title" content="yuuu's portfolio" />
         <meta property="og:description" content="yuuu's portfolio" />
         <meta name="keywords" content="yuuu portfolio" />
-        <meta property="og:type" content="blog" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content="https://portfolio-v2-ui.vercel.app" />
         <meta
           property="og:image"
