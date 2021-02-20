@@ -46,7 +46,7 @@ const Skills: NextPage<{ skills: Skill[]; generatedAt: string }> = ({
         <dl className="mt-4 flex flex-wrap justify-items-center items-center space-x-4 grid md:grid-cols-4 grid-cols-2">
           {skills.map((skill) => (
             <div key={skill.id}>
-              <div className="w-36 mb-32 rounded-md bg-indigo-500">
+              <div className="w-36 mt-16 mb-16 rounded-md bg-indigo-500">
                 <Tooltip
                   title={skill.title}
                   position="top"
