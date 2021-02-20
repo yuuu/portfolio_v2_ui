@@ -11,6 +11,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>yuuu&lsquo;s portfolio</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta property="og:title" content="yuuu's portfolio" />
+        <meta property="og:description" content="yuuu's portfolio" />
+        <meta name="keywords" content="yuuu portfolio" />
+        <meta property="og:type" content="blog" />
+        <meta property="og:url" content="https://portfolio-v2-ui.vercel.app" />
+        <meta
+          property="og:image"
+          content="https://portfolio-v2-ui.vercel.app/og_image.svg"
+        />
+        <meta property="og:site_name" content="yuuu's portfolio" />
       </Head>
       <AuthProvider
         signinPath="/administrators/sign_in"
