@@ -18,10 +18,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:url" content="https://portfolio-v2-ui.vercel.app" />
         <meta
           property="og:image"
-          content="https://portfolio-v2-ui.vercel.app/images/og_image.svg"
+          content="https://portfolio-v2-ui.vercel.app/images/og_image.png"
         />
         <meta property="og:site_name" content="yuuu's portfolio" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="" />
         <meta name="twitter:site" content="@Y_uuu" />
         <meta name="twitter:player" content="@Y_uuu" />
       </Head>
