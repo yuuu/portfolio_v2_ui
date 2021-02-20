@@ -21,6 +21,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           content="https://portfolio-v2-ui.vercel.app/images/og_image.svg"
         />
         <meta property="og:site_name" content="yuuu's portfolio" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@Y_uuu" />
+        <meta name="twitter:player" content="@Y_uuu" />
       </Head>
       <AuthProvider
         signinPath="/administrators/sign_in"
