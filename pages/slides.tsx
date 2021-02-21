@@ -57,11 +57,11 @@ const Slides: NextPage<{ slides: Slide[]; generatedAt: string }> = ({
                   {slide.publishedAt}
                 </h3>
                 <a href={slide.link} target="_blank" rel="noreferrer">
-                  <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
+                  <h2 className="title-font text-3xl mb-4 font-medium text-gray-900 break-all">
                     {slide.title}
-                  </h1>
+                  </h2>
                 </a>
-                <p className="leading-relaxed">{slide.body}</p>
+                <p className="leading-relaxed break-all">{slide.body}</p>
                 {currentUser && (
                   <div className="flex flex-row justify-end mt-4 mb-4">
                     <LinkButton href={`/admin/slides/${slide.id}/edit`}>

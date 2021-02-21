@@ -61,11 +61,11 @@ const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
                   {article.publishedAt}
                 </h3>
                 <a href={article.link} target="_blank" rel="noreferrer">
-                  <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
+                  <h2 className="title-font text-3xl mb-4 font-medium text-gray-900 break-all">
                     {article.title}
-                  </h1>
+                  </h2>
                 </a>
-                <p className="leading-relaxed">{article.body}</p>
+                <p className="leading-relaxed break-all">{article.body}</p>
                 {currentUser && (
                   <div className="flex flex-row justify-end mt-4 mb-4">
                     <LinkButton href={`/admin/articles/${article.id}/edit`}>
