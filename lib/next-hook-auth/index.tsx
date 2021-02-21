@@ -54,6 +54,7 @@ export const useSignin = () => {
     const signinParams = {}
     signinParams[context.config.resourceName] = params
     await axios.post(context.config.signinPath, signinParams)
+    localStorage.setItem('next-hook-auth', 'signin')
     await mutate(context.config.currentUserPath)
   }
 }
@@ -63,6 +64,7 @@ export const useSignout = () => {
   return async () => {
     await axios.get(context.config.currentUserPath)
     await axios.delete(context.config.signoutPath)
+    localStorage.setItem('next-hook-auth', 'signout')
     await mutate(context.config.currentUserPath)
   }
 }
@@ -75,8 +77,17 @@ export type User = {
 
 export const useAuth = (redirect = false) => {
   const context = useContext(AuthContext)
-  const fetcher = () =>
-    axios.get(context.config.currentUserPath).then((res) => res.data)
+  const fetcher = () => {
+    if (localStorage.getItem('next-hook-auth') == 'signout')
+      throw Error('Unauthorized')
+    return axios.get(context.config.currentUserPath).then((res) => {
+      localStorage.setItem(
+        'next-hook-auth',
+        res.status === 401 ? 'signout' : 'signin'
+      )
+      return res.data
+    })
+  }
   const { data, error } = useSWR(context.config.currentUserPath, fetcher)
   const router = useRouter()
 
