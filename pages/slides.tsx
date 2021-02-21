@@ -32,7 +32,7 @@ const Slides: NextPage<{ slides: Slide[]; generatedAt: string }> = ({
     <Layout signedin={!!currentUser} generatedAt={generatedAt}>
       <Header title="Slides" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/slides/new">New</LinkButton>
         </div>
       )}
@@ -40,10 +40,10 @@ const Slides: NextPage<{ slides: Slide[]; generatedAt: string }> = ({
         <div className="flex flex-wrap">
           {slides?.map((slide) => (
             <div
-              className="flex mb-8 md:flex-row w-full flex-col items-center"
+              className="flex mb-16 md:flex-row w-full flex-col items-center"
               key={slide.id}
             >
-              <div className="md:w-1/3 mb-2">
+              <div className="md:w-1/3 mb-4">
                 <a href={slide.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
@@ -57,7 +57,7 @@ const Slides: NextPage<{ slides: Slide[]; generatedAt: string }> = ({
                   {slide.publishedAt}
                 </h3>
                 <a href={slide.link} target="_blank" rel="noreferrer">
-                  <h2 className="title-font text-3xl mb-4 font-medium text-gray-900 break-all">
+                  <h2 className="title-font text-2xl mb-4 font-medium text-gray-900 break-all">
                     {slide.title}
                   </h2>
                 </a>

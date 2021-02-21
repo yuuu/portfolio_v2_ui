@@ -36,7 +36,7 @@ const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
     >
       <Header title="Articles" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/articles/new">New</LinkButton>
         </div>
       )}
@@ -44,10 +44,10 @@ const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
         <div className="flex flex-wrap">
           {articles?.map((article) => (
             <div
-              className="flex mb-8 md:flex-row w-full flex-col items-center"
+              className="flex mb-16 md:flex-row w-full flex-col items-center"
               key={article.id}
             >
-              <div className="md:w-1/3 mb-2">
+              <div className="md:w-1/3 mb-4">
                 <a href={article.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
@@ -61,7 +61,7 @@ const Articles: NextPage<{ articles: Article[]; generatedAt: string }> = ({
                   {article.publishedAt}
                 </h3>
                 <a href={article.link} target="_blank" rel="noreferrer">
-                  <h2 className="title-font text-3xl mb-4 font-medium text-gray-900 break-all">
+                  <h2 className="title-font text-2xl mb-4 font-medium text-gray-900 break-all">
                     {article.title}
                   </h2>
                 </a>

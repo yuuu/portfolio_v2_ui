@@ -38,7 +38,7 @@ const Skills: NextPage<{ skills: Skill[]; generatedAt: string }> = ({
     >
       <Header title="Skills" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/skills/new">New</LinkButton>
         </div>
       )}

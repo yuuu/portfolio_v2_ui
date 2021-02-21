@@ -48,7 +48,7 @@ const ProfilePage: NextPage<{ profile: Profile; generatedAt: string }> = ({
     >
       <Header title="Profile" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/profile">Edit</LinkButton>
         </div>
       )}

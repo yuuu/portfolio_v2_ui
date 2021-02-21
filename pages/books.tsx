@@ -32,7 +32,7 @@ const Books: NextPage<{ books: Book[]; generatedAt: string }> = ({
     <Layout signedin={!!currentUser} loading={!books} generatedAt={generatedAt}>
       <Header title="Books" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/books/new">New</LinkButton>
         </div>
       )}
@@ -43,7 +43,7 @@ const Books: NextPage<{ books: Book[]; generatedAt: string }> = ({
               key={book.id}
               className="flex mb-8 md:flex-row w-full flex-col items-center"
             >
-              <div className="md:w-1/4">
+              <div className="md:w-1/4 w-3/4">
                 <a href={book.link} target="_blank" rel="noreferrer">
                   <img
                     className="object-cover object-center rounded"
@@ -52,13 +52,13 @@ const Books: NextPage<{ books: Book[]; generatedAt: string }> = ({
                   />
                 </a>
               </div>
-              <div className="md:flex-grow md:w-1/2 w-full md:pl-16 flex flex-col items-start text-left mt-4">
+              <div className="md:flex-grow md:w-1/2 w-full md:pl-16 flex flex-col items-start text-left">
                 <a href={book.link} target="_blank" rel="noreferrer">
-                  <h1 className="title-font text-3xl mb-4 font-medium text-gray-900">
+                  <h1 className="title-font text-3xl pt-4 pb-4 font-medium text-gray-900">
                     {book.title}
                   </h1>
                 </a>
-                <p className="mb-2 leading-relaxed">{book.description}</p>
+                <p className="mb-4 leading-relaxed">{book.description}</p>
                 {currentUser && (
                   <div className="flex flex-row justify-end mt-4 mb-4">
                     <LinkButton href={`/admin/books/${book.id}/edit`}>

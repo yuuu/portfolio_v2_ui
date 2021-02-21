@@ -32,7 +32,7 @@ const Apps: NextPage<{ apps: App[]; generatedAt: string }> = ({
     <Layout signedin={!!currentUser} loading={!apps} generatedAt={generatedAt}>
       <Header title="Apps" />
       {currentUser && (
-        <div className="flex flex-row justify-end mb-4">
+        <div className="flex flex-row justify-end mb-8">
           <LinkButton href="/admin/apps/new">New</LinkButton>
         </div>
       )}
