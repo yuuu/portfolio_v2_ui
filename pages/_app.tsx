@@ -15,10 +15,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:description" content="yuuu's portfolio" />
         <meta name="keywords" content="yuuu portfolio" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://portfolio-v2-ui.vercel.app" />
+        <meta property="og:url" content="https://portfolio.y-uuu.net" />
         <meta
           property="og:image"
-          content="https://portfolio-v2-ui.vercel.app/images/og_image.png"
+          content="https://portfolio.y-uuu.net/images/og_image.png"
         />
         <meta property="og:site_name" content="yuuu's portfolio" />
         <meta name="twitter:card" content="summary_large_image" />

@@ -9,7 +9,10 @@ type Props = {
   generatedAt?: string
 }
 
-export const Footer: React.FC<Props> = ({ signedin, generatedAt }) => {
+export const Footer: React.FC<Props> = ({
+  signedin,
+  generatedAt: _generatedAt,
+}) => {
   const router = useRouter()
   const { addToast } = useToasts()
   const signout = useSignout()
@@ -28,9 +31,9 @@ export const Footer: React.FC<Props> = ({ signedin, generatedAt }) => {
             <span className="text-xs">
               Copyright © 2021 yuuu. All Rights Reserved.
             </span>
-            <span className="text-xs">
+            {/* <span className="text-xs">
               {generatedAt && `generated at ${generatedAt}`}
-            </span>
+            </span> */}
           </p>
           <span className="inline-flex flex-col sm:ml-auto justify-end">
             {signedin ? (
